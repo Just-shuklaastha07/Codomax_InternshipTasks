@@ -4,40 +4,46 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add Blog</title>
+
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
     <!-- Navigation Bar -->
-    <nav>
-        <div class="logo">My Blog</div>
+    <nav class="navbar">
+        <h2 class="logo">My Blog</h2>
+
         <ul>
             <li><a href="index.html">Home</a></li>
             <li><a href="addblog.html">Add Blog</a></li>
         </ul>
     </nav>
 
-    <!-- Form -->
-    <section class="form-container">
-        <h2>Add New Blog</h2>
+    <!-- Blog Form -->
+    <div class="form-box">
+
+        <h2>Add a New Blog</h2>
 
         <form>
-            <label>Blog Title</label>
-            <input type="text" placeholder="Enter blog title">
 
-            <label>Author Name</label>
-            <input type="text" placeholder="Enter author name">
+            <label for="title">Blog Title</label><br>
+            <input type="text" id="title" placeholder="Enter blog title">
 
-            <label>Blog Content</label>
-            <textarea rows="8" placeholder="Write your blog here..."></textarea>
+            <label for="author">Author Name</label><br>
+            <input type="text" id="author" placeholder="Enter your name">
+
+            <label for="content">Blog Content</label><br>
+            <textarea id="content" rows="8" placeholder="Write your blog here..."></textarea>
 
             <button type="submit">Publish Blog</button>
+
         </form>
-    </section>
+
+    </div>
 
     <!-- Footer -->
     <footer>
-        <p>&copy; 2026 My Blog | All Rights Reserved.</p>
+        <p>© 2026 My Blog | Created by Astha</p>
     </footer>
 
 </body>
