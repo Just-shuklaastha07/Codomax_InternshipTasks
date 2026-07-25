@@ -158,3 +158,14 @@ footer{
 .form-box button:hover{
     background:#2980b9;
 }
+
+#message{
+
+    text-align:center;
+
+    font-weight:bold;
+
+    margin-top:20px;
+
+    font-size:18px;
+}
