@@ -4,19 +4,34 @@ const app = express();
 
 app.use(express.json());
 
-// GET Route
+// Home Route
 app.get("/", (req, res) => {
-    res.send("Welcome to my Express Server!");
+    res.send("Welcome to my Blog API!");
 });
 
 // POST Route
-app.post("/submit", (req, res) => {
-    const data = req.body;
+const blogs = [];
 
-    res.send({
-        message: "Data received successfully!",
-        receivedData: data
+app.post("/blogs", (req, res) => {
+    const { title, content } = req.body;
+
+    const blog = {
+        id: blogs.length + 1,
+        title,
+        content
+    };
+
+    blogs.push(blog);
+
+    res.status(201).json({
+        message: "Blog added successfully!",
+        blog
     });
+});
+
+// GET Route
+app.get("/blogs", (req, res) => {
+    res.json(blogs);
 });
 
 // Start Server
