@@ -1,19 +1,29 @@
 const express = require("express");
+const cors = require("cors");
 
 const app = express();
 
+// Middleware
 app.use(express.json());
+app.use(cors());
+
+// Store blogs in memory
+const blogs = [];
 
 // Home Route
 app.get("/", (req, res) => {
-    res.send("Welcome to my Blog API!");
+    res.send("Welcome to My Blog API!");
 });
 
-// POST Route
-const blogs = [];
-
+// POST Route - Add a Blog
 app.post("/blogs", (req, res) => {
     const { title, content } = req.body;
+
+    if (!title || !content) {
+        return res.status(400).json({
+            message: "Title and content are required."
+        });
+    }
 
     const blog = {
         id: blogs.length + 1,
@@ -29,7 +39,7 @@ app.post("/blogs", (req, res) => {
     });
 });
 
-// GET Route
+// GET Route - View All Blogs
 app.get("/blogs", (req, res) => {
     res.json(blogs);
 });
