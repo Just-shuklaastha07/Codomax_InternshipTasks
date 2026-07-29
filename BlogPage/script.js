@@ -77,12 +77,34 @@ async function loadBlogs() {
 function showBlogView(card, blog) {
 
     card.innerHTML = `
-        <h3>${blog.title}</h3>
-        <p>${blog.content}</p>
+    <h3>${blog.title}</h3>
+    <p>${blog.content}</p>
 
-        <button class="editBtn">Edit</button>
-    `;
+    <button class="editBtn">Edit</button>
+    <button class="deleteBtn">Delete</button>
+`;
 
+const deleteBtn = card.querySelector(".deleteBtn");
+
+deleteBtn.addEventListener("click", async function () {
+
+    const confirmDelete = confirm("Are you sure you want to delete this blog?");
+
+    if (!confirmDelete) {
+        return;
+    }
+
+    const response = await fetch(`http://localhost:3000/blogs/${blog.id}`, {
+        method: "DELETE"
+    });
+
+    if (response.ok) {
+        loadBlogs();
+    } else {
+        alert("Failed to delete blog.");
+    }
+
+});
     const editBtn = card.querySelector(".editBtn");
 
     editBtn.addEventListener("click", () => {
@@ -117,6 +139,8 @@ function showEditForm(card, blog) {
             return;
         }
 
+        console.log(blog);
+console.log(blog.id);
         const response = await fetch(`http://localhost:3000/blogs/${blog.id}`, {
             method: "PUT",
             headers: {

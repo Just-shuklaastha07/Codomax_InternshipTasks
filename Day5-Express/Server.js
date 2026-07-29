@@ -72,6 +72,28 @@ app.put("/blogs/:id", (req, res) => {
 // Start Server
 const PORT = 3000;
 
+
+// DELETE Route - Delete Blog
+app.delete("/blogs/:id", (req, res) => {
+
+    const id = parseInt(req.params.id);
+
+    const index = blogs.findIndex(blog => blog.id === id);
+
+    if (index === -1) {
+        return res.status(404).json({
+            message: "Blog not found"
+        });
+    }
+
+    blogs.splice(index, 1);
+
+    res.json({
+        message: "Blog deleted successfully!"
+    });
+
+});
+
 app.listen(PORT, () => {
     console.log(`Server running on http://localhost:${PORT}`);
 });
