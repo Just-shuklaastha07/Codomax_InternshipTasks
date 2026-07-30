@@ -134,23 +134,14 @@ async function loadBlogs() {
 function showBlogView(card, blog) {
 
     card.innerHTML = `
+    <h3>${blog.title}</h3>
+    <p>${blog.content}</p>
 
-        <h3>${blog.title}</h3>
-
-        <p>${blog.content}</p>
-
-        <div class="blog-actions">
-
-            <button class="editBtn">
-                Edit
-            </button>
-
-            <button class="deleteBtn">
-                Delete
-            </button>
-
-        </div>
-    `;
+    <div class="blog-actions">
+        <button class="editBtn">Edit</button>
+        <button class="deleteBtn">Delete</button>
+    </div>
+`;
 
 
     // ===============================

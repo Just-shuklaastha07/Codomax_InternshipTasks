@@ -1,47 +1,127 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Blog</title>
+
+    <title>Inkly | Write. Share. Inspire.</title>
 
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
+    <!-- Navigation Bar -->
     <nav class="navbar">
-        <h2 class="logo">My Blog</h2>
+
+        <div class="logo">
+            <span>Ink</span>ly
+        </div>
 
         <ul>
-            <li><a href="index.html">Home</a></li>
-            <li><a href="addblog.html">Add Blog</a></li>
+            <li>
+                <a href="index.html">Home</a>
+            </li>
+
+            <li>
+                <a href="addBlog.html">Add Blog</a>
+            </li>
         </ul>
+
     </nav>
 
+
+    <!-- Hero Section -->
     <section class="hero">
-        <h1>Welcome to My Blog</h1>
 
-        <p>
-            This website is created to share blogs, ideas and learning experiences.
-            Feel free to explore the latest posts.
-        </p>
+        <!-- Decorative circles -->
+        <div class="decor-circle circle-one"></div>
+        <div class="decor-circle circle-two"></div>
+        <div class="decor-circle circle-three"></div>
 
-        <a href="addblog.html" class="btn">Create Blog</a>
+        <div class="hero-content">
+
+            <p class="small-heading">
+                WELCOME TO INKLY
+            </p>
+
+            <h1>
+                Your thoughts deserve
+                <br>
+                a place to be
+                <span>read.</span>
+            </h1>
+
+            <p class="hero-text">
+                A little corner of the internet where ideas,
+                experiences and stories come together.
+            </p>
+
+            <a href="addBlog.html" class="btn">
+                Start Writing
+                <span class="arrow">→</span>
+            </a>
+
+        </div>
+
+        <!-- Floating quote -->
+        <div class="floating-note">
+            <span>“</span>
+            <p>
+                Every story<br>
+                starts with<br>
+                one thought.
+            </p>
+        </div>
+
     </section>
 
-    <section class="blogs">
 
-        <h2>Latest Blogs</h2>
+    <!-- Blog Section -->
+    <section class="blogs" id="blogs">
 
+        <div class="section-heading">
+
+            <p class="small-heading">
+                EXPLORE
+            </p>
+
+            <h2>Latest Stories</h2>
+
+            <p>
+                Read something new or share something of your own.
+            </p>
+
+        </div>
+
+
+        <!-- Blogs will be loaded using JavaScript -->
         <div id="blogContainer"></div>
 
     </section>
 
+
+    <!-- Footer -->
     <footer>
-        <p>© 2026 My Blog | Created by Astha</p>
+
+        <div class="footer-logo">
+            <span>Ink</span>ly
+        </div>
+
+        <p>
+            Write. Share. Inspire.
+        </p>
+
+        <p class="copyright">
+            © 2026 Inkly | Created by Astha
+        </p>
+
     </footer>
+
 
     <script src="script.js"></script>
 
 </body>
+
 </html>

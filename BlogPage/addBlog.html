@@ -1,53 +1,153 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add Blog</title>
+
+    <title>Inkly | Write a Blog</title>
 
     <link rel="stylesheet" href="style.css">
+
 </head>
+
+
 <body>
 
     <!-- Navigation Bar -->
+
     <nav class="navbar">
-        <h2 class="logo">My Blog</h2>
+
+        <div class="logo">
+            Inkly
+        </div>
 
         <ul>
-            <li><a href="index.html">Home</a></li>
-            <li><a href="addblog.html">Add Blog</a></li>
+
+            <li>
+                <a href="index.html">
+                    Home
+                </a>
+            </li>
+
+            <li>
+                <a href="addBlog.html">
+                    Add Blog
+                </a>
+            </li>
+
         </ul>
+
     </nav>
 
-    <!-- Blog Form -->
-    <div class="form-box">
 
-        <h2>Add a New Blog</h2>
+    <!-- Add Blog Section -->
 
-        <form id="blogForm">
+    <main class="add-blog-page">
 
-    <label for="title">Blog Title</label>
-    <input type="text" id="title" placeholder="Enter blog title">
+        <div class="form-box">
 
-    <label for="author">Author Name</label>
-    <input type="text" id="author" placeholder="Enter your name">
+            <div class="form-heading">
 
-    <label for="content">Blog Content</label>
-    <textarea id="content" rows="8" placeholder="Write your blog here..."></textarea>
+                <p class="small-heading">
+                    YOUR STORY
+                </p>
 
-    <button type="submit">Publish Blog</button>
+                <h1>
+                    Write something worth reading.
+                </h1>
 
-</form>
+                <p>
+                    Put your thoughts into words and share them with the world.
+                </p>
 
-<p id="message"></p>
+            </div>
 
-<script src="script.js"></script>
-    </div>
+
+            <form id="blogForm">
+
+                <!-- Blog Title -->
+
+                <label for="title">
+                    Blog Title
+                </label>
+
+                <input
+                    type="text"
+                    id="title"
+                    placeholder="Give your story a title..."
+                >
+
+
+                <!-- Author -->
+
+                <label for="author">
+                    Author Name
+                </label>
+
+                <input
+                    type="text"
+                    id="author"
+                    placeholder="Enter your name..."
+                >
+
+
+                <!-- Blog Content -->
+
+                <label for="content">
+                    Blog Content
+                </label>
+
+                <textarea
+                    id="content"
+                    rows="10"
+                    placeholder="Start writing your story..."
+                ></textarea>
+
+
+                <!-- Submit -->
+
+                <button
+                    type="submit"
+                    class="publish-btn"
+                >
+                    Publish Story
+                </button>
+
+            </form>
+
+
+            <!-- Message -->
+
+            <p id="message"></p>
+
+        </div>
+
+    </main>
+
 
     <!-- Footer -->
+
     <footer>
-        <p>© 2026 My Blog | Created by Astha</p>
+
+        <div class="footer-logo">
+            Inkly
+        </div>
+
+        <p>
+            Write. Share. Inspire.
+        </p>
+
+        <p class="copyright">
+            © 2026 Inkly | Created by Astha
+        </p>
+
     </footer>
 
+
+    <script src="script.js"></script>
+
 </body>
+
 </html>
