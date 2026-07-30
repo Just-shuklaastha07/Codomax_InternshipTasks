@@ -1,3 +1,7 @@
+// ===============================
+// ADD BLOG
+// ===============================
+
 const form = document.getElementById("blogForm");
 
 if (form) {
@@ -11,6 +15,7 @@ if (form) {
 
         event.preventDefault();
 
+        // Check empty fields
         if (
             title.value.trim() === "" ||
             author.value.trim() === "" ||
@@ -18,28 +23,61 @@ if (form) {
         ) {
             message.innerHTML = "Please fill in all the fields.";
             message.style.color = "red";
-        } else {
+            return;
+        }
 
-            await fetch("http://localhost:3000/blogs", {
+        try {
+
+            const response = await fetch("http://localhost:3000/blogs", {
                 method: "POST",
+
                 headers: {
                     "Content-Type": "application/json"
                 },
+
                 body: JSON.stringify({
-                    title: title.value,
-                    content: content.value
+                    title: title.value.trim(),
+                    content: content.value.trim()
                 })
             });
 
+            // Check if server response is successful
+            if (!response.ok) {
+                throw new Error("Failed to add blog");
+            }
+
+            const data = await response.json();
+
+            console.log("Blog added:", data);
+
             message.innerHTML = "Blog submitted successfully!";
             message.style.color = "green";
+
             form.reset();
 
+            // Go back to Home page after 1 second
+            setTimeout(() => {
+                window.location.href = "index.html";
+            }, 1000);
+
+        } catch (error) {
+
+            console.error("Error:", error);
+
+            message.innerHTML =
+                "Unable to add blog. Please try again.";
+
+            message.style.color = "red";
         }
 
     });
 
 }
+
+
+// ===============================
+// VIEW BLOGS
+// ===============================
 
 const blogContainer = document.getElementById("blogContainer");
 
@@ -48,18 +86,29 @@ async function loadBlogs() {
     try {
 
         const response = await fetch("http://localhost:3000/blogs");
+
+        if (!response.ok) {
+            throw new Error("Failed to fetch blogs");
+        }
+
         const blogs = await response.json();
+
+        console.log("Blogs received:", blogs);
 
         blogContainer.innerHTML = "";
 
         if (blogs.length === 0) {
-            blogContainer.innerHTML = "<p>No blogs available.</p>";
+
+            blogContainer.innerHTML =
+                "<p>No blogs available. Create your first blog!</p>";
+
             return;
         }
 
         blogs.forEach(blog => {
 
             const card = document.createElement("div");
+
             card.className = "blog-card";
 
             showBlogView(card, blog);
@@ -69,108 +118,235 @@ async function loadBlogs() {
         });
 
     } catch (error) {
-        console.error("Error:", error);
-    }
 
+        console.error("Error:", error);
+
+        blogContainer.innerHTML =
+            "<p>Unable to load blogs. Please make sure the server is running.</p>";
+    }
 }
+
+
+// ===============================
+// DISPLAY BLOG
+// ===============================
 
 function showBlogView(card, blog) {
 
     card.innerHTML = `
-    <h3>${blog.title}</h3>
-    <p>${blog.content}</p>
 
-    <button class="editBtn">Edit</button>
-    <button class="deleteBtn">Delete</button>
-`;
+        <h3>${blog.title}</h3>
 
-const deleteBtn = card.querySelector(".deleteBtn");
+        <p>${blog.content}</p>
 
-deleteBtn.addEventListener("click", async function () {
+        <div class="blog-actions">
 
-    const confirmDelete = confirm("Are you sure you want to delete this blog?");
+            <button class="editBtn">
+                Edit
+            </button>
 
-    if (!confirmDelete) {
-        return;
-    }
+            <button class="deleteBtn">
+                Delete
+            </button>
 
-    const response = await fetch(`http://localhost:3000/blogs/${blog.id}`, {
-        method: "DELETE"
-    });
+        </div>
+    `;
 
-    if (response.ok) {
-        loadBlogs();
-    } else {
-        alert("Failed to delete blog.");
-    }
 
-});
+    // ===============================
+    // EDIT BUTTON
+    // ===============================
+
     const editBtn = card.querySelector(".editBtn");
 
     editBtn.addEventListener("click", () => {
+
         showEditForm(card, blog);
+
+    });
+
+
+    // ===============================
+    // DELETE BUTTON
+    // ===============================
+
+    const deleteBtn = card.querySelector(".deleteBtn");
+
+    deleteBtn.addEventListener("click", async function () {
+
+        const confirmDelete =
+            confirm("Are you sure you want to delete this blog?");
+
+        if (!confirmDelete) {
+            return;
+        }
+
+        try {
+
+            const response = await fetch(
+                `http://localhost:3000/blogs/${blog.id}`,
+                {
+                    method: "DELETE"
+                }
+            );
+
+            if (!response.ok) {
+                throw new Error("Failed to delete blog");
+            }
+
+            const data = await response.json();
+
+            console.log("Delete response:", data);
+
+            // Reload blogs
+            loadBlogs();
+
+        } catch (error) {
+
+            console.error("Delete error:", error);
+
+            alert(
+                "Unable to delete blog. Please try again."
+            );
+        }
+
     });
 
 }
+
+
+// ===============================
+// EDIT BLOG FORM
+// ===============================
 
 function showEditForm(card, blog) {
 
     card.innerHTML = `
-        <input type="text" class="edit-title" value="${blog.title}">
 
-        <textarea class="edit-content" rows="5">${blog.content}</textarea>
+        <h3>Edit Blog</h3>
+
+        <input
+            type="text"
+            class="edit-title"
+            value="${blog.title}"
+            placeholder="Blog title"
+        >
+
+        <textarea
+            class="edit-content"
+            rows="5"
+            placeholder="Blog content"
+        >${blog.content}</textarea>
 
         <div class="edit-actions">
-            <button class="saveBtn">Save</button>
-            <button class="cancelBtn">Cancel</button>
+
+            <button class="saveBtn">
+                Save
+            </button>
+
+            <button class="cancelBtn">
+                Cancel
+            </button>
+
         </div>
     `;
 
+
     const saveBtn = card.querySelector(".saveBtn");
+
     const cancelBtn = card.querySelector(".cancelBtn");
 
-    saveBtn.addEventListener("click", async () => {
 
-        const newTitle = card.querySelector(".edit-title").value.trim();
-        const newContent = card.querySelector(".edit-content").value.trim();
+    // ===============================
+    // SAVE EDIT
+    // ===============================
+
+    saveBtn.addEventListener("click", async function () {
+
+        const newTitle =
+            card.querySelector(".edit-title").value.trim();
+
+        const newContent =
+            card.querySelector(".edit-content").value.trim();
+
 
         if (newTitle === "" || newContent === "") {
-            alert("Fields cannot be empty");
+
+            alert("Title and content cannot be empty.");
+
             return;
         }
 
-        console.log(blog);
-console.log(blog.id);
-        const response = await fetch(`http://localhost:3000/blogs/${blog.id}`, {
-            method: "PUT",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                title: newTitle,
-                content: newContent
-            })
-        });
 
-        if (response.ok) {
+        try {
 
+            const response = await fetch(
+                `http://localhost:3000/blogs/${blog.id}`,
+                {
+                    method: "PUT",
+
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+
+                    body: JSON.stringify({
+                        title: newTitle,
+                        content: newContent
+                    })
+                }
+            );
+
+
+            if (!response.ok) {
+                throw new Error("Failed to update blog");
+            }
+
+
+            const data = await response.json();
+
+            console.log("Updated blog:", data);
+
+
+            // Update local blog object
             blog.title = newTitle;
             blog.content = newContent;
 
+
+            // Show updated blog
             showBlogView(card, blog);
 
-        } else {
-            alert("Failed to update blog.");
+
+        } catch (error) {
+
+            console.error("Update error:", error);
+
+            alert(
+                "Unable to update blog. Please try again."
+            );
         }
 
     });
 
-    cancelBtn.addEventListener("click", () => {
+
+    // ===============================
+    // CANCEL EDIT
+    // ===============================
+
+    cancelBtn.addEventListener("click", function () {
+
         showBlogView(card, blog);
+
     });
 
 }
 
+
+// ===============================
+// LOAD BLOGS WHEN HOME PAGE OPENS
+// ===============================
+
 if (blogContainer) {
+
     loadBlogs();
+
 }
